@@ -70,9 +70,10 @@ export function TransactionModal() {
                         type="number"
                         value={amount}
                         onChange={e => set_amount(isNaN(parseInt(e.target.value)) ? 0 : parseInt(e.target.value))}
-                        isInvalid={amount > bank_user.balance}
+                        isInvalid={amount > bank_user.balance || amount < 0}
                     />
-                    <Form.Control.Feedback type="invalid">You only have ${bank_user.balance} to send!</Form.Control.Feedback>
+                    <Form.Control.Feedback type="invalid" hidden={amount >= 0}>Your amount can't be negative!</Form.Control.Feedback>
+                    <Form.Control.Feedback type="invalid" hidden={amount < 0}>You only have ${bank_user.balance} to send!</Form.Control.Feedback>
                 </InputGroup>
                 <br />
                 <InputGroup size="lg">

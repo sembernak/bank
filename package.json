@@ -61,5 +61,7 @@
   "devDependencies": {
     "@types/node": "^18.16.1",
     "gh-pages": "^5.0.0"
-  }
+  },
+  "proxy": "http://localhost:3000",
+  "homepage": "https://bank.tunaruna.com"
 }

@@ -4,6 +4,8 @@ import { QuizQuestion, resolve_nullish_quizquestion } from "./QuizQuestion"
 export interface Quiz{
     owner: string; //hash id of the teacher who created the quiz
 
+    unit: string; //collection of quizzes that this quiz belongs to
+
     title: string; //name of quiz
 
     description: string; //what quiz is on
@@ -20,6 +22,7 @@ export interface Quiz{
 export function default_quiz(): Quiz {
     return {
         owner: "",
+        unit: "",
         title: "",
         description: "",
         money: 0,
@@ -32,6 +35,7 @@ export function default_quiz(): Quiz {
 export function resolve_nullish_quiz(quiz: Quiz): Quiz {
     return {
         owner: quiz.owner ?? "",
+        unit: quiz.unit ?? "",
         title: quiz.title ?? "",
         description: quiz.description ?? "",
         money: quiz.money ?? 0,

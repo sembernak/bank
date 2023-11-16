@@ -77,6 +77,14 @@ export function EditForm({quiz, set_quiz}: {quiz: Quiz, set_quiz: (q: Quiz) => v
                     />
                 </InputGroup>
                 <InputGroup size="lg" className="quiz-input-field">
+                    <InputGroup.Text className="quiz-input-text">Unit</InputGroup.Text>
+                    <Form.Control
+                        type="text"
+                        value={quiz.unit}
+                        onChange={e => set_quiz({...quiz, unit: e.target.value})}
+                    />
+                </InputGroup>
+                <InputGroup size="lg" className="quiz-input-field">
                     <InputGroup.Text className="quiz-input-text">Quiz description</InputGroup.Text>
                     <Form.Control
                         as="textarea"
