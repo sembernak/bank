@@ -22,7 +22,7 @@ export interface Quiz{
 export function default_quiz(): Quiz {
     return {
         owner: "",
-        unit: "",
+        unit: "0",
         title: "",
         description: "",
         money: 0,
@@ -35,7 +35,7 @@ export function default_quiz(): Quiz {
 export function resolve_nullish_quiz(quiz: Quiz): Quiz {
     return {
         owner: quiz.owner ?? "",
-        unit: quiz.unit ?? "",
+        unit: quiz.unit ?? "0",
         title: quiz.title ?? "",
         description: quiz.description ?? "",
         money: quiz.money ?? 0,
