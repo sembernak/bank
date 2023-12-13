@@ -1,6 +1,9 @@
 
 .user-quiz-page {
     text-align: center;
+    display: flex;
+    align-content: center;
+    flex-direction: column;
 }
 
 .quiz-card {
@@ -9,8 +12,17 @@
 }
 
 .quiz-list {
+    width: 100vw;
     display: flex;
     justify-content: center;
     flex-direction: row;
     flex-wrap: wrap;
+    align-self: center;
+}
+
+.unit-accordion {
+    width: 22rem;
+    border-color: #86b7fe;
+    border-style: solid;
+    border-width: 1px;
 }
