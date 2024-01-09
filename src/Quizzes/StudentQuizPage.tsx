@@ -27,7 +27,8 @@ export function StudentQuizPage(): JSX.Element{
 
     useEffect(() => {
         get_quizzes(bank.quizzes).then((quizz) => {
-            set_quizzes(quizz)
+            let dCheck = new Date().valueOf();
+            set_quizzes(quizz.filter(q => new Date(q.end).valueOf() >= dCheck));
         });
     }, [bank]);
 
@@ -43,7 +44,6 @@ function QuizList({quizzes, set_selected_quiz}: {quizzes: Quiz[], set_selected_q
     const user = useContext(AuthContext).user;
     const bank_user = bank.studentList.find(val => val.uid === user.hash) ?? DEFAULT_BANK_USER;
 
-    //I know this is stupid, I just dont want to think right now
     const finished_quizzes: Quiz[] = quizzes.filter(q => bank_user.finishedQuizzes.find(f => f.quiz===q.hash) !== undefined);
     const unfinished_quizzes: Quiz[] = quizzes.filter(q => bank_user.finishedQuizzes.find(f => f.quiz===q.hash) === undefined);
 
@@ -88,6 +88,7 @@ function FinishedQuizCard({quiz, select}: {quiz: Quiz, select: ()=>void}): JSX.E
         </Card>
     )
 }
+
 function UnfinishedQuizCard({quiz, select}: {quiz: Quiz, select: ()=>void}): JSX.Element {
     return (
         <Card className="unfinished-quiz-card">

@@ -8,10 +8,9 @@ import { get_quizzes, update_quiz } from "../DatabaseFunctions/QuizFunctions";
 import "./UserQuizPage.css"
 import { EditQuizModal } from "./EditQuiz";
 import { ImportQuiz } from "./ImportQuiz";
-import { DownloadTemplate } from "./DownloadTemplate";
 
 export function TestAccordion({quizList, enableDropping, handleDragStart, handleDrop, handleDragOverStart, handleDragOverEnd} :
-    {quizList : Quiz[], 
+    {   quizList : Quiz[], 
         enableDropping: (event: React.DragEvent<HTMLDivElement>)=> void,
         handleDragStart: (event: React.DragEvent<HTMLDivElement>, quiz: Quiz)=> void,
         handleDrop: (event: React.DragEvent<HTMLDivElement>)=> void,

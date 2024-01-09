@@ -11,12 +11,20 @@ export interface Quiz{
     description: string; //what quiz is on
 
     money: number; //how much money a student earns for earning a 100% on the quiz
+
+    end: string; //End of availability to take quiz
     
     questions: QuizQuestion[]; //the actual questions in the quiz
 
     hash: string
 
     allowed_attempts: [number, number, number, number]
+}
+
+const setDate = () => {
+    let toGive = new Date();
+    toGive.getDate();
+    return toGive.toDateString();
 }
 
 export function default_quiz(): Quiz {
@@ -26,6 +34,7 @@ export function default_quiz(): Quiz {
         title: "",
         description: "",
         money: 0,
+        end: setDate(), 
         questions: [],
         hash: "",
         allowed_attempts: [1, 1, 1, 1]
@@ -39,6 +48,7 @@ export function resolve_nullish_quiz(quiz: Quiz): Quiz {
         title: quiz.title ?? "",
         description: quiz.description ?? "",
         money: quiz.money ?? 0,
+        end: quiz.end ?? "1-1-2024",
         questions: quiz.questions===undefined ? [] : (
             quiz.questions.map((q: QuizQuestion) => resolve_nullish_quizquestion(q))
         ),

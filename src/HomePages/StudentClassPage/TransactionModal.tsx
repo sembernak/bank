@@ -65,7 +65,7 @@ export function TransactionModal() {
                 </Form.Select>
                 <br/>
                 <InputGroup size="lg" hasValidation>
-                    <InputGroup.Text>How much money?</InputGroup.Text>
+                    <InputGroup.Text aria-required>How much money?</InputGroup.Text>
                     <Form.Control 
                         type="number"
                         value={amount}
@@ -91,7 +91,7 @@ export function TransactionModal() {
                     size="lg"
                     variant="success"
                     onClick={send}
-                    disabled={receiver===null || amount > bank_user.balance}    
+                    disabled={receiver===null || amount > bank_user.balance || amount < 0}    
                 >Send</Button>
             </Col>
             <Modal show={show_confirm_modal} onHide={() => set_show_confirm_modal(false)}>

@@ -7,6 +7,8 @@ import "./EditQuiz.css";
 import { delete_quiz } from "../DatabaseFunctions/QuizFunctions";
 import { update_auth_user } from "../DatabaseFunctions/UserFunctions";
 import { AuthContext } from "../Authentication/auth";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 
 export function EditQuizModal(
@@ -53,6 +55,8 @@ export function EditQuizModal(
 }
 
 export function EditForm({quiz, set_quiz}: {quiz: Quiz, set_quiz: (q: Quiz) => void}): JSX.Element {
+    const [startDate, setStartDate] = useState(new Date(quiz.end));
+
     const add_question = () => {
         set_quiz({...quiz, questions: [...quiz.questions, default_quizquestion()]})
     }
@@ -62,6 +66,10 @@ export function EditForm({quiz, set_quiz}: {quiz: Quiz, set_quiz: (q: Quiz) => v
             return;
         }
         set_quiz({...quiz, questions: quiz.questions.map((q, ind) => index===ind ? new_question : q)});
+    }
+    const setEnd = (date: Date) => {
+        set_quiz({...quiz, end: date.toDateString()});
+        setStartDate(date);
     }
 
     return (
@@ -101,6 +109,10 @@ export function EditForm({quiz, set_quiz}: {quiz: Quiz, set_quiz: (q: Quiz) => v
                         value={quiz.money}
                         onChange={e => set_quiz({...quiz, money: (isNaN(parseInt(e.target.value)) ? 0 : parseInt(e.target.value))})}
                     />
+                </InputGroup>
+                <InputGroup size="lg" className="quiz-input-field">
+                    <InputGroup.Text className="quiz-input-text">Availabiltiy</InputGroup.Text>
+                    <DatePicker selected={startDate} onSelect={e => setEnd(e)} onChange={e => setEnd(e)} />
                 </InputGroup>
             </Form>
             <br/>
