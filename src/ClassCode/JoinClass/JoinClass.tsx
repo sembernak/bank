@@ -33,6 +33,9 @@ export function JoinClassButton(){
             }
             if(bank?.studentList.find(u=>u.uid===user.hash) !== undefined) {
                 alert("You have already joined this class!");
+                if (!user.groups.includes(bankCode)) {
+                    await update_auth_user(user.hash, {...user, groups: [...user.groups, bankCode]});
+                }
                 return;
             }
             await create_bank_users(bank, user.hash);

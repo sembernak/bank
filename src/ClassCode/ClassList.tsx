@@ -47,7 +47,7 @@ function ClassButton({ bank_id }: { bank_id: string }): JSX.Element {
                 </Card.Text>
                 <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <Link to={"../" + bank_id}><Button size="lg">Open</Button></Link>
-                <Button variant="danger" onClick={handleShow} size="lg">Delete</Button>
+                <Button hidden={!user.isTeacher} variant="danger" onClick={handleShow} size="lg">Delete</Button>
                 <Modal show={show} onHide={handleClose}>
                     <Modal.Header closeButton>
                         <Modal.Title>Deleting {bank.classTitle}</Modal.Title>
@@ -57,7 +57,7 @@ function ClassButton({ bank_id }: { bank_id: string }): JSX.Element {
                         <Button variant="secondary" onClick={handleClose}>
                             Close
                         </Button>
-                        <Button variant="danger" onClick={handleCloseDelete}>
+                        <Button hidden={!user.isTeacher} variant="danger" onClick={handleCloseDelete}>
                             Delete
                         </Button>
                     </Modal.Footer>

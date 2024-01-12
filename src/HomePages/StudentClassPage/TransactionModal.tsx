@@ -91,7 +91,7 @@ export function TransactionModal() {
                     size="lg"
                     variant="success"
                     onClick={send}
-                    disabled={receiver===null || amount > bank_user.balance || amount < 0}    
+                    disabled={receiver===null || amount > bank_user.balance || amount <= 0}    
                 >Send</Button>
             </Col>
             <Modal show={show_confirm_modal} onHide={() => set_show_confirm_modal(false)}>

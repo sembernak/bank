@@ -59,13 +59,13 @@ export function TeacherClassPage({classCode}:{classCode:string}){
                     </Container>
                 </Tab>
             </Tabs>
-            <EditClassModal show={show_edit_modal} set_show={set_show_edit_modal}/>
+            <EditClassModal show={show_edit_modal} classCode={classCode} set_show={set_show_edit_modal}/>
         </div>
     )
 }
 
 
-function EditClassModal({show, set_show}: {show: boolean, set_show: (b: boolean)=>void}): JSX.Element {
+function EditClassModal({show, set_show, classCode}: {show: boolean, set_show: (b: boolean)=>void, classCode: string}): JSX.Element {
     const bank: Bank = useContext(BankContext).bank;
     const [class_name, set_class_name] = useState<null | string>(null);
     const [class_description, set_class_description] = useState<null | string>(null);
@@ -113,6 +113,7 @@ function EditClassModal({show, set_show}: {show: boolean, set_show: (b: boolean)
                         onChange={e => set_class_color(e.target.value)}
                     />
                 </InputGroup>
+                <p>Class code: {classCode}</p>
             </Modal.Body>
             <Modal.Footer>
                 <Col>
