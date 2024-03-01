@@ -29,8 +29,8 @@
 }
 
 .edit-form-container {
-    width: 85%;
-    min-width: 400px;
+    width: 100%;
+    min-width: 500px;
 }
 
 .edit-form-row {

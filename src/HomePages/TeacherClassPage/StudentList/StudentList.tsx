@@ -5,10 +5,11 @@ import { get_auth_users } from "../../../DatabaseFunctions/UserFunctions";
 import { AuthUser, DEFAULT_AUTH_USER } from "../../../Interfaces/AuthUser";
 import { BankUser, MasteryLevel, Role, getTitle } from "../../../Interfaces/BankUser";
 import { delete_bank_users, update_bank_user } from "../../../DatabaseFunctions/BankUserFunctions";
-import { Button, Col, Container, Form, Image, InputGroup, Modal, Overlay, Row, Table, Tooltip } from "react-bootstrap";
+import { Accordion, Button, Col, Container, Form, Alert, InputGroup, Modal, Overlay, Row, Table, Tooltip } from "react-bootstrap";
 import { AuthContext, BankContext } from "../../../Authentication/auth";
 import { Icon } from "../../../Avatar/Icon";
 import { update_bank } from "../../../DatabaseFunctions/BankFunctions";
+import { compareDates, Transaction } from '../../../Interfaces/Transaction'; //Used to sort the passed in Transactions by date
 
 
 //This file is kind of a mess, sorry everyone
@@ -120,6 +121,15 @@ function are_bankusers_equal(a: BankUser, b: BankUser): boolean {
 
 function EditBankUserForm({bank_user, set_bank_user, set_show_modal}: {bank_user: BankUser, set_bank_user: (b: BankUser) => void, set_show_modal: (b:boolean)=>void}): JSX.Element {
     const user = useContext(AuthContext).user;
+
+    //State variable to be able to expand/contract transactions
+    const [viewAll, setViewAll] = useState<Boolean>(false);
+    const bank = useContext(BankContext).bank;
+
+    //filter transactions to only contained ones where the current user is a receiver or sender, then sort the result, and slice it if viewAll is false
+    const transactions = bank.completedList[bank_user.uid] ? (bank.completedList as Record<string, Transaction[]>)[bank_user.uid].sort((a, b) => compareDates(a, b)) : [];
+
+
     return (
         <Container className="edit-form-container">
             {/*alias select form */}
@@ -176,7 +186,45 @@ function EditBankUserForm({bank_user, set_bank_user, set_show_modal}: {bank_user
             ) : (
                 <></>
             )}
-            
+            <Container style={{paddingTop: "2vh"}}>
+                <Table striped>
+                    <thead>
+                        <tr>
+                            <th>Account</th>
+                            <th>To/From</th>
+                            <th>Description</th>
+                            <th>Amount</th>
+                            <th>Balance</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {transactions.map((t, index) => 
+                            <tr key={index}>
+                                <td>{t.receiver_name}</td>
+                                <td>{t.sender_name}</td>
+                                <td>{t.receiver_description}</td>
+                                <td style={{backgroundColor: (user.hash===t.sender_uid) ? "pink" : "lightgreen"}}>{t.transfer_amount.toFixed(2)}</td>
+                                <td>{t.receiver_balance.toFixed(2)}</td>
+                                <td>{new Date(Date.parse(t.date)).toLocaleString()}</td>
+                            </tr>
+                        )}
+                        <tr>
+                            <td colSpan={6}>
+                                {transactions.length===0 ? (
+                                    <Alert variant="info">No transactions!</Alert>
+                                ) : (
+                                    viewAll ? (
+                                        <Button onClick={()=>setViewAll(false)}>Collapse transactions</Button>
+                                    ) : (
+                                        <Button onClick={()=>setViewAll(true)}>View all transactions</Button>
+                                    )
+                                )}
+                            </td>
+                        </tr>
+                    </tbody>
+                </Table>
+            </Container>
         </Container>
     )
 }
